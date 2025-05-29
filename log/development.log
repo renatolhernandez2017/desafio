@@ -10,3 +10,5 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 1025ms (Views: 11.5ms | ActiveRecord: 0.0ms | Allocations: 1678013)
 
 
+DEPRECATION WARNING: `Rails.application.secrets` is deprecated in favor of `Rails.application.credentials` and will be removed in Rails 7.2. (called from <main> at /workspaces/desafio/config/environment.rb:5)
+Initializing websocket
