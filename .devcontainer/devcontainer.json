@@ -36,7 +36,6 @@
       "extensions": [
         "testdouble.vscode-standard-ruby",
         "Shopify.ruby-lsp",
-        "bradlc.vscode-tailwindcss",
         "esbenp.prettier-vscode",
         "hridoy.rails-snippets",
         "miguel-savignano.ruby-symbols",
