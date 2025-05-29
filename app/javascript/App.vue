@@ -1,17 +1,15 @@
 <template>
-  <div class="p-4 text-center">
-    <h1 class="text-2xl font-bold text-blue-600">Vue + Rails funcionando 🎉</h1>
+  <div>
+    <Login v-if="!user" />
+    <MessageChannel v-else :user="user" />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-}
-</script>
+<script setup>
+import Login from './components/Login.vue'
+import MessageChannel from './components/MessageChannel.vue'
 
-<style scoped>
-h1 {
-  margin-top: 50px;
-}
-</style>
+const props = defineProps({
+  user: Object
+})
+</script>

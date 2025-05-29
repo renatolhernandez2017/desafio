@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-document.addEventListener('DOMContentLoaded', () => {
-  const appElement = document.getElementById('app')
-  if (appElement) {
-    createApp(App).mount(appElement)
-  }
-})
+
+const el = document.getElementById('app')
+const user = el.dataset.user ? JSON.parse(el.dataset.user) : null
+
+createApp(App, { user }).mount('#app')

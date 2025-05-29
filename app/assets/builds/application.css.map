@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["vue:./App.vue?vue&type=style"],
-  "sourcesContent": ["\nh1[data-v-472cff63] {\n  margin-top: 50px;\n}\n"],
-  "mappings": ";AACA,EAAE,CAAC;AACD,cAAY;AACd;",
-  "names": []
-}

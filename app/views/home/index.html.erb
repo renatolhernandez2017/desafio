@@ -1,0 +1,1 @@
+<%= tag.div id: "app", data: { user: current_user&.as_json(only: [:id, :email, :username, :name]) } %>
