@@ -17,10 +17,13 @@
     "vue": "3"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build": "node esbuild.config.js",
+    "build:watch": "node esbuild.config.js --watch",
+    "dev": "node esbuild.config.js --watch",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "devDependencies": {
-    "daisyui": "^4.10.3"
+    "daisyui": "^4.10.3",
+    "esbuild-plugin-vue": "^0.2.4"
   }
 }

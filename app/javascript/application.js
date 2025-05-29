@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-const app = createApp(App)
-app.mount('#app')
-import "./channels"
+document.addEventListener('DOMContentLoaded', () => {
+  const appElement = document.getElementById('app')
+  if (appElement) {
+    createApp(App).mount(appElement)
+  }
+})

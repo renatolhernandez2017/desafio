@@ -14,14 +14,11 @@
 
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <div id="app"></div>
-    <%= javascript_include_tag "application", type: "module" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <%= yield %>
+    <div id="app"></div>
+    <%= javascript_include_tag "application", type: "module" %>
   </body>
 </html>
