@@ -1,5 +1,12 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!
   before_action :authorize_user, only: %i[update destroy]
+
+  def index
+    @messages = Message.includes(:user).order(:created_at)
+  end
+
+  private
 
   def authorize_user
     @message = Message.find(params[:id])

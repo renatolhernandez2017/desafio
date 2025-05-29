@@ -1,16 +1,9 @@
 Rails.application.routes.draw do
-  root "home#index"
+  root to: "home#index"
 
   devise_for :users
-  get "up" => "rails/health#show", :as => :rails_health_check
 
-  namespace :admin do
-  end
+  get "/chat", to: "messages#index"
 
-  ###############
-  ###   API  ###
-  ###############
-
-  namespace :api do
-  end
+  get "up" => "rails/health#show", as: :rails_health_check
 end
