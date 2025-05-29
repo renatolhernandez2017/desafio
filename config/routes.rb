@@ -5,5 +5,12 @@ Rails.application.routes.draw do
 
   get "/chat", to: "messages#index"
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up", to: "rails/health#show", as: :rails_health_check
+
+  namespace :api, defaults: {format: :json} do
+    resources :users, only: [:create]
+
+    post "/login", to: "sessions#create"
+    delete "/logout", to: "sessions#destroy"
+  end
 end

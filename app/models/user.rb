@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -11,5 +12,5 @@ class User < ApplicationRecord
             format: { with: /\A[a-zA-Z0-9\-_]+\z/, message: "só permite letras, números, '-' e '_'" }
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password, length: { in: 20..100 }, confirmation: true, if: -> { password.present? }
+  validates :password, presence: true, length: { in: 20..100 }, confirmation: true, if: -> { password.present? || new_record? }
 end
