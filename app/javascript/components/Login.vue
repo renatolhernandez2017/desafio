@@ -1,9 +1,19 @@
 <template>
-  <form @submit.prevent="submitLogin" class="login-form">
-    <input v-model="login" placeholder="Email" required />
-    <input type="password" v-model="password" placeholder="Senha" required />
-    <button type="submit">Entrar</button>
-    <p v-if="error" class="error">{{ error }}</p>
+  <form @submit.prevent="submitLogin">
+    <div class="">
+      <h2 class="text-center">Entrar</h2>
+
+      <div class="mb-3 mt-3">
+        <input id="login" v-model="login" placeholder="Email" class="form-control" required />
+      </div>
+
+      <div class="mb-3 mt-3">
+        <input id="password" type="password" v-model="password" placeholder="Senha" class="form-control" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Entrar</button>
+      <p v-if="error" class="text-danger m-2">{{ error }}</p>
+    </div>
   </form>
 </template>
 
@@ -28,16 +38,13 @@
               password: this.password
             }),
           });
+
           const data = await res.json();
 
           if (data.success) {
-            // Salva os dados do usuário no localStorage
-            localStorage.setItem('user', JSON.stringify(data.user));
-
-            // Redireciona para o chat
-            this.$router.push('/chat');
+            this.$emit('login-success', data.user)
           } else {
-            this.error = data.error || 'Erro ao logar';
+            this.error = data.error || 'Erro ao logar'
           }
         } catch (e) {
           this.error = 'Erro de conexão';
@@ -46,9 +53,3 @@
     },
   };
 </script>
-
-<style scoped>
-  .error {
-    color: red;
-  }
-</style>
