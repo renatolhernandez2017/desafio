@@ -1,8 +1,5 @@
-// Entry point for the build script in your package.json
-import "@hotwired/turbo-rails";
-import "./controllers";
+import { createApp } from 'vue'
+import App from './App.vue'
 
-Turbo.StreamActions.redirect = function () {
-  Turbo.visit(this.target);
-};
-
+const app = createApp(App)
+app.mount('#app')
