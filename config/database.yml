@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  <% if ENV["DB_HOST"] %>
+  host: <%= ENV["DB_HOST"] %>
+  username: postgres
+  password: postgres
+  <% end %>
+
+development:
+  <<: *default
+  database: challenge_development
+
+test:
+  <<: *default
+  database: challenge_test
+
+production:
+  <<: *default
+  database: challenge_production
+  username: challenge
+  password: <%= ENV["CHALLENGE_DATABASE_PASSWORD"] %>
