@@ -13,6 +13,10 @@
 
       <button type="submit" class="btn btn-primary">Entrar</button>
       <p v-if="error" class="text-danger m-2">{{ error }}</p>
+
+      <p v-if="typeof error === 'string' && error.includes('bloqueada')" class="text-warning m-2">
+        <a :href="`/unlock/${unlockToken}`">Clique aqui para desbloquear sua conta</a>
+      </p>
     </div>
   </form>
 </template>

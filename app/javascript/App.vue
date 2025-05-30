@@ -7,7 +7,7 @@
           <Signup v-else @signup-success="handleSignup" />
 
           <button class="btn btn-success w-100 mt-3" @click="toggleForm">
-          {{ showSignup ? 'Já tem conta? Login' : 'Não tem conta? Cadastre-se' }}
+            {{ showSignup ? 'Já tem conta? Login' : 'Não tem conta? Cadastre-se' }}
           </button>
         </div>
       </div>

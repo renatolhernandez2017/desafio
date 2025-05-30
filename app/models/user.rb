@@ -2,6 +2,9 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
+  MAX_FAILED_ATTEMPTS = 5
+  LOCK_TIME = 60.minutes
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -13,4 +16,28 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { in: 20..100 }, confirmation: true, if: -> { password.present? || new_record? }
+
+  def locked?
+    locked_at.present? && locked_at > LOCK_TIME.ago
+  end
+
+  def increment_failed_attempts!
+    update!(failed_attempts: failed_attempts.to_i + 1)
+    lock_account! if failed_attempts >= MAX_FAILED_ATTEMPTS
+  end
+
+  def reset_failed_attempts!
+    update!(failed_attempts: 0)
+  end
+
+  def lock_account!
+    update!(
+      locked_at: Time.current,
+      unlock_token: SecureRandom.hex(10)
+    )
+  end
+
+  def unlock_account!
+    update!(failed_attempts: 0, locked_at: nil, unlock_token: nil)
+  end
 end

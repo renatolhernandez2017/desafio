@@ -47,6 +47,7 @@ group :development do
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
   gem "htmlbeautifier"
   gem "letter_opener"
+  gem 'letter_opener_web'
   gem "lookbook", ">= 2.3.0"
   gem "rails_live_reload"
   gem "ruby-lsp-rails", require: false
