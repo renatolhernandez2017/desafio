@@ -10,7 +10,7 @@ class Api::MessagesController < ApplicationController
         id: message.id,
         content: message.content,
         created_at: message.created_at,
-        user: { name: message.user.name }
+        user: {name: message.user.name}
       }
     }
   end
@@ -55,7 +55,7 @@ class Api::MessagesController < ApplicationController
         }
       )
 
-      render json: { content: @message.content }
+      render json: {content: @message.content}
     else
       head :unauthorized
     end

@@ -138,9 +138,10 @@
   }
 
   async function sendMessage() {
+    const token = localStorage.getItem('chat_token')
+
     if (newMessage.value.trim() !== '') {
       try {
-        const token = localStorage.getItem('chat_token')
         await axios.post('/api/messages', {
           message: { content: newMessage.value, room: 'geral' }
         }, {
