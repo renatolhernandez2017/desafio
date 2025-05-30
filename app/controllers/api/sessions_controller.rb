@@ -10,9 +10,10 @@ class Api::SessionsController < ApplicationController
     end
 
     if user&.valid_password?(params[:password])
+      token = Rails.application.message_verifier(:user).generate(user.id)
       user.reset_failed_attempts!
       session[:user_id] = user.id
-      render json: {success: true, user: user.slice(:id, :name, :username, :email)}
+      render json: {success: true, token: token, user: user.slice(:id, :name, :username, :email)}
     else
       user&.increment_failed_attempts!
       render json: {success: false, error: "Email ou senha inválidos"}, status: :unauthorized

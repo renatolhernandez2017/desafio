@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  mount ActionCable.server => '/cable'
+
   namespace :api, defaults: {format: :json} do
     resources :users, only: [:create]
 
