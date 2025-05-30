@@ -3,7 +3,11 @@ class Api::MessagesController < ApplicationController
   before_action :set_message, only: %i[update destroy]
 
   def index
-    messages = Message.includes(:user).order(created_at: :desc)
+    messages = if params[:query].present?
+      Message.search_full_text(params[:query]).includes(:user).reorder(created_at: :desc)
+    else
+      Message.includes(:user).order(created_at: :desc)
+    end
 
     render json: messages.map { |message|
       {

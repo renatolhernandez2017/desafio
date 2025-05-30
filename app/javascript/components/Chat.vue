@@ -2,6 +2,11 @@
   <div>
     <h2>Chat</h2>
 
+    <div class="filters mb-3">
+      <input v-model="searchQuery" placeholder="Buscar mensagem ou autor" />
+      <button @click="fetchMessages">Buscar</button>
+    </div>
+
     <div v-for="(msg, index) in messages" :key="msg.id">
       <p>
         <strong>{{ msg.user }}:</strong>
@@ -42,6 +47,7 @@
   const newMessage = ref('')
   const editIndex = ref(null)
   const editContent = ref('')
+  const searchQuery = ref('')
   let channel = null
 
   function formatTime(datetime) {
@@ -50,9 +56,12 @@
 
   async function fetchMessages() {
     const token = localStorage.getItem('chat_token')
+    const params = new URLSearchParams()
+
+    if (searchQuery.value) params.append('query', searchQuery.value)
 
     try {
-      const response = await axios.get('/api/messages', {
+      const response = await axios.get(`/api/messages?${params.toString()}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
