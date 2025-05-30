@@ -5,7 +5,7 @@ class Api::SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
 
     if user&.locked?
-      render json: { success: false, error: "Conta bloqueada. Verifique seu email para desbloquear." }, status: :unauthorized
+      render json: {success: false, unlock_token: user.unlock_token, error: "Conta bloqueada."}, status: :unauthorized
       return
     end
 
@@ -28,11 +28,11 @@ class Api::SessionsController < ApplicationController
   def unlock
     user = User.find_by(unlock_token: params[:token])
 
-    if user
+    if user&.locked?
       user.unlock_account!
-      render json: { success: true, message: "Conta desbloqueada com sucesso. Você pode fazer login." }
+      render json: {success: true, message: "Sua conta foi desbloqueada com sucesso!"}
     else
-      render json: { success: false, error: "Token inválido ou expirado." }, status: :unprocessable_entity
+      render json: {error: "Token inválido ou conta já desbloqueada."}, status: :unprocessable_entity
     end
   end
 end

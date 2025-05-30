@@ -1,0 +1,7 @@
+<h1>Olá, <%= @user.name %>!</h1>
+<p>Sua conta encontra-se bloqueada.</p>
+<p>Para desbloquear é só cliclar no botão abaixo!</p>
+
+<p>
+  <%= link_to "Desbloquear Conta", "#{@root_url}api/unlock/#{@unlock_token}" %>
+</p>

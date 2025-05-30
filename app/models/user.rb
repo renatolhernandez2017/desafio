@@ -6,16 +6,16 @@ class User < ApplicationRecord
   LOCK_TIME = 60.minutes
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable
+    :recoverable, :rememberable, :validatable,
+    :confirmable
 
-  validates :name, presence: true, length: { in: 3..255 }
+  validates :name, presence: true, length: {in: 3..255}
 
-  validates :username, presence: true, uniqueness: true, length: { in: 5..50 },
-            format: { with: /\A[a-zA-Z0-9\-_]+\z/, message: "só permite letras, números, '-' e '_'" }
+  validates :username, presence: true, uniqueness: true, length: {in: 5..50},
+    format: {with: /\A[a-zA-Z0-9\-_]+\z/, message: "só permite letras, números, '-' e '_'"}
 
-  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password, presence: true, length: { in: 20..100 }, confirmation: true, if: -> { password.present? || new_record? }
+  validates :email, presence: true, uniqueness: true, format: {with: URI::MailTo::EMAIL_REGEXP}
+  validates :password, presence: true, length: {in: 20..100}, confirmation: true, if: -> { password.present? || new_record? }
 
   def locked?
     locked_at.present? && locked_at > LOCK_TIME.ago

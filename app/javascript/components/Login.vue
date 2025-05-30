@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submitLogin">
-    <div class="">
+    <div>
       <h2 class="text-center">Entrar</h2>
 
       <div class="mb-3 mt-3">
@@ -12,10 +12,15 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Entrar</button>
-      <p v-if="error" class="text-danger m-2">{{ error }}</p>
 
-      <p v-if="typeof error === 'string' && error.includes('bloqueada')" class="text-warning m-2">
-        <a :href="`/unlock/${unlockToken}`">Clique aqui para desbloquear sua conta</a>
+      <p v-if="error && !isAccountBlocked" class="alert alert-danger mt-2">{{ error }}</p>
+      <p v-if="successMessage" class="alert alert-success mt-2">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</p>
+
+      <p v-if="isAccountBlocked && unlockToken" class="alert alert-danger mt-2">
+        {{ error }}
+        <br />
+        <a href="#" @click.prevent="unlockAccount">Clique aqui para desbloquear sua conta</a>
       </p>
     </div>
   </form>
@@ -27,12 +32,20 @@
       return {
         login: '',
         password: '',
-        error: null
+        error: null,
+        successMessage: '',
+        errorMessage: '',
+        unlockToken: null,
+        isAccountBlocked: false
       };
     },
     methods: {
       async submitLogin() {
         this.error = null;
+        this.successMessage = '';
+        this.errorMessage = '';
+        this.isAccountBlocked = false;
+
         try {
           const res = await fetch('/api/login', {
             method: 'POST',
@@ -52,12 +65,42 @@
 
             this.$emit('login-success', data.user)
           } else {
-            this.error = data.error || 'Erro ao logar'
+            if (data.error?.includes('bloqueada')) {
+              this.isAccountBlocked = true;
+              this.unlockToken = data.unlock_token;
+              this.error = data.error;
+            } else {
+              this.error = data.error || 'Erro ao logar';
+            }
           }
         } catch (e) {
           this.error = 'Erro de conexão';
         }
       },
+      async unlockAccount() {
+        try {
+          const response = await fetch(`/api/unlock/${this.unlockToken}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            this.successMessage = data.message || 'Conta desbloqueada com sucesso!';
+            this.errorMessage = '';
+            this.error = '';
+            this.isAccountBlocked = false;
+            this.unlockToken = null;
+          } else {
+            this.errorMessage = data.error || 'Falha ao desbloquear conta.';
+            this.successMessage = '';
+          }
+        } catch(e) {
+          this.errorMessage = 'Erro de conexão.';
+          this.successMessage = '';
+        }
+      }
     },
   };
 </script>

@@ -1,0 +1,5 @@
+Olá, <%= @user.name %>!
+Sua conta encontra-se bloqueada.
+Para desbloquear é só cliclar no botão abaixo!
+
+<%= link_to "Desbloquear Conta", "#{@root_url}api/unlock/#{@unlock_token}" %>
