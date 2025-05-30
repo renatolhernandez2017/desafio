@@ -48,6 +48,8 @@
           if (data.success) {
             const token = data.token
             localStorage.setItem('chat_token', token)
+            localStorage.setItem('chat_user_name', data.user.name)
+
             this.$emit('login-success', data.user)
           } else {
             this.error = data.error || 'Erro ao logar'

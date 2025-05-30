@@ -7,15 +7,12 @@ const subscription = consumer.subscriptions.create(
   { channel: "ChatChannel", room: "geral" },
   {
     connected() {
-      console.log("Conectado ao ChatChannel!")
     },
 
     disconnected() {
-      console.log("Desconectado do ChatChannel.")
     },
 
     received(data) {
-      console.log("Mensagem recebida:", data)
       // Aqui você pode chamar uma função para adicionar no chat, etc
     }
   }

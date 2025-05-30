@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  get "/chat", to: "messages#index"
-
   get "up", to: "rails/health#show", as: :rails_health_check
 
   if Rails.env.development?
@@ -14,7 +12,8 @@ Rails.application.routes.draw do
   mount ActionCable.server => '/cable'
 
   namespace :api, defaults: {format: :json} do
-    resources :users, only: [:create]
+    resources :users, only: %i[create]
+    resources :messages, only: %i[index create update destroy]
 
     get "/unlock/:token", to: "sessions#unlock", as: :unlock
     post "/login", to: "sessions#create"
