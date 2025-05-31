@@ -1,10 +1,9 @@
 import consumer from "./consumer"
 
-// Certifique-se de que o arquivo consumer.js está exportando corretamente o consumer
-// e que o servidor ActionCable está rodando e acessível.
+const token = localStorage.getItem('chat_token')
 
 const subscription = consumer.subscriptions.create(
-  { channel: "ChatChannel", room: "geral" },
+  { channel: "ChatChannel", room: "geral", token: token },
   {
     connected() {
     },
@@ -13,7 +12,6 @@ const subscription = consumer.subscriptions.create(
     },
 
     received(data) {
-      // Aqui você pode chamar uma função para adicionar no chat, etc
     }
   }
 )

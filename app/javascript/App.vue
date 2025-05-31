@@ -1,24 +1,24 @@
 <template>
-  <div class="container-fluid min-vh-100 bg-light d-flex flex-column justify-content-center align-items-center">
-    <div v-if="!user" class="row w-100 justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="min-vh-100 bg-light d-flex flex-column justify-content-center align-items-center">
+    <div v-if="!user" class="row w-100 justify-content-center align-items-center">
       <div class="col-12 col-sm-8 col-md-5 col-lg-4">
         <div class="shadow-lg p-4 bg-white rounded">
           <Login v-if="!showSignup" @login-success="handleLogin" />
           <Signup v-else @signup-success="handleSignup" />
 
-          <button class="btn btn-success w-100 mt-3" @click="toggleForm">
+          <button class="btn btn-dark w-100 mt-3" @click="toggleForm">
             {{ showSignup ? 'Já tem conta? Login' : 'Não tem conta? Cadastre-se' }}
           </button>
         </div>
       </div>
     </div>
 
-    <div v-else class="row w-100 flex-grow-1" style="min-height: 80vh;">
+    <div v-else class="row w-100 flex-grow-1 min-vh-80">
       <div class="col-12 col-md-3 col-lg-2 bg-dark text-white py-4">
-        <div class="d-flex justify-content-between align-items-center w-100">
+        <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex align-items-center gap-3">
-            <div class="rounded-circle bg-success d-flex align-items-center justify-content-center" style="width:56px; height:56px; font-size:2rem;">
-              {{ user.name ? user.name.charAt(0).toUpperCase() : '?' }}
+            <div class="me-2">
+              <span class="material-symbols-outlined img-size">account_circle</span>
             </div>
 
             <div class="fw-bold">{{ user.name || 'Usuário' }}</div>
@@ -37,8 +37,10 @@
   </div>
 </template>
 
-<style scoped>
-  /* Bootstrap já cobre a maior parte do layout, mas você pode adicionar ajustes aqui se quiser */
+<style>
+  .img-size {
+    font-size: 50px;
+  }
 </style>
 
 <script>

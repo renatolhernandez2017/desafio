@@ -1,41 +1,101 @@
 <template>
-  <div>
+  <div class="mx-5">
     <h2>Chat</h2>
 
-    <div class="filters mb-3">
-      <input v-model="searchQuery" placeholder="Buscar mensagem ou autor" />
-      <button @click="fetchMessages">Buscar</button>
+    <div class="filters my-4">
+      <div class="input-group">
+        <input v-model="searchQuery" class="form-control" placeholder="Buscar por mensagem ou autor" />
+        <button @click="fetchMessages" class="btn btn-success">Buscar</button>
+      </div>
     </div>
 
-    <div v-for="(msg, index) in messages" :key="msg.id">
-      <p>
-        <strong>{{ msg.user }}:</strong>
+    <div class="card card-body">
+      <div v-for="(msg, index) in messages" :key="msg.id" class="container-fluid">
+        <div :class="['d-flex mb-3 align-items-center', msg.user === currentUser ? 'justify-content-start' : 'justify-content-end']">
+          <div class="me-2">
+            <span class="material-symbols-outlined img-size">account_circle</span>
+          </div>
 
-        <template v-if="editIndex === index">
-          <input v-model="editContent" />
-          <button @click="updateMessage(index, msg.id)">Salvar</button>
-          <button @click="cancelEditing">Cancelar</button>
-        </template>
+          <div>
+            <div class="d-flex gap-2 align-items-center mb-1">
+              <strong class="text-black">{{ msg.user }}</strong>
+              <small class="text-black opacity-50">{{ msg.formatted_time }}</small>
+            </div>
 
-        <template v-else>
-          {{ msg.content }}
-          <span style="font-size: 0.8em; color: gray">({{ msg.formatted_time }})</span>
+            <div class="p-2 rounded-3 bg-primary" style="max-width: 250px;">
+              <template v-if="editIndex === index">
+                <input v-model="editContent" class="form-control form-control-sm" />
 
-          <button @click="startEditing(index, msg.content)" :disabled="msg.user !== currentUser">
-            Editar
-          </button>
+                <div class="mt-2">
+                  <button class="btn btn-sm btn-success me-2" @click="updateMessage(index, msg.id)">
+                    Salvar
+                  </button>
 
-          <button @click="deleteMessage(msg.id)" :disabled="msg.user !== currentUser">
-            Excluir
-          </button>
-        </template>
-      </p>
+                  <button class="btn btn-sm btn-secondary" @click="cancelEditing">
+                    Cancelar
+                  </button>
+                </div>
+              </template>
+
+              <template v-else>
+                <p class="mb-0 text-white">{{ msg.content }}</p>
+              </template>
+            </div>
+
+            <small class="text-muted">entregue</small>
+          </div>
+
+          <div class="mt-1">
+            <button class="no-border no-border-disabled" :disabled="msg.user !== currentUser"
+              :class="{ 'opacity-50 cursor-not-allowed': msg.user !== currentUser }"
+              @click="msg.user === currentUser && startEditing(index, msg.content)"
+              title="Editar mensagem"
+            >
+              <span class="material-symbols-outlined font-size">edit</span>
+            </button>
+
+            <button class="no-border no-border-disabled" :disabled="msg.user !== currentUser"
+              :class="{ 'opacity-50 cursor-not-allowed': msg.user !== currentUser }"
+              @click="msg.user === currentUser && deleteMessage(msg.id)"
+              title="Excluir mensagem"
+            >
+              <span class="material-symbols-outlined font-size">delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Digite sua mensagem" />
-    <button @click="sendMessage">Enviar</button>
+    <div class="input-group my-4">
+      <input v-model="newMessage" @keyup.enter="sendMessage" class="form-control" placeholder="Digite sua mensagem" />
+      <button @click="sendMessage" class="btn btn-success">Enviar</button>
+    </div>
   </div>
 </template>
+
+<style scoped>
+  .text-xs {
+    font-size: 0.75rem; /* 12px */
+  }
+
+  .no-border {
+    display: inline-block;
+    border: transparent;
+    background: transparent;
+    padding: 2px;
+  }
+
+  .no-border-disabled:disabled {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background-color: transparent !important;
+  }
+
+  .font-size {
+    font-size: 22px;
+  }
+</style>
 
 <script setup>
   import { ref, onMounted } from 'vue'
@@ -66,7 +126,7 @@
           Authorization: `Bearer ${token}`
         }
       })
-
+      
       messages.value = response.data
         .map(msg => ({
           id: msg.id,

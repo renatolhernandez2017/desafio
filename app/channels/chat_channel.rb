@@ -15,7 +15,7 @@ class ChatChannel < ApplicationCable::Channel
       "chat_#{params[:room]}",
       {
         content: data["content"],
-        user: data["user"],
+        user: current_user,
         created_at: Time.now.strftime("%H:%M:%S")
       }
     )

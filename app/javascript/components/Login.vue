@@ -1,28 +1,30 @@
 <template>
   <form @submit.prevent="submitLogin">
-    <div>
-      <h2 class="text-center">Entrar</h2>
-
-      <div class="mb-3 mt-3">
-        <input id="login" v-model="login" placeholder="Email" class="form-control" required />
-      </div>
-
-      <div class="mb-3 mt-3">
-        <input id="password" type="password" v-model="password" placeholder="Senha" class="form-control" required />
-      </div>
-
-      <button type="submit" class="btn btn-primary">Entrar</button>
-
-      <p v-if="error && !isAccountBlocked" class="alert alert-danger mt-2">{{ error }}</p>
-      <p v-if="successMessage" class="alert alert-success mt-2">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</p>
-
-      <p v-if="isAccountBlocked && unlockToken" class="alert alert-danger mt-2">
-        {{ error }}
-        <br />
-        <a href="#" @click.prevent="unlockAccount">Clique aqui para desbloquear sua conta</a>
-      </p>
+    <div class="d-flex justify-content-center mb-5">
+      <img src="/images/logo.png" alt="Logo" class="img-fluid col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2" />
     </div>
+
+    <h2 class="text-center">Login</h2>
+
+    <div class="mb-3 mt-3">
+      <input id="login" v-model="login" placeholder="Email" class="form-control" required />
+    </div>
+
+    <div class="mb-3 mt-3">
+      <input id="password" type="password" v-model="password" placeholder="Senha" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Entrar</button>
+
+    <p v-if="error && !isAccountBlocked" class="alert alert-danger mt-2">{{ error }}</p>
+    <p v-if="successMessage" class="alert alert-success mt-2">{{ successMessage }}</p>
+    <p v-if="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</p>
+
+    <p v-if="isAccountBlocked && unlockToken" class="alert alert-danger mt-2">
+      {{ error }}
+      <br />
+      <a href="#" @click.prevent="unlockAccount">Clique aqui para desbloquear sua conta</a>
+    </p>
   </form>
 </template>
 
