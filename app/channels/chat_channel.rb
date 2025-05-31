@@ -14,9 +14,9 @@ class ChatChannel < ApplicationCable::Channel
     ActionCable.server.broadcast(
       "chat_#{params[:room]}",
       {
-        content: message.content,
-        user: message.user,
-        created_at: message.created_at.strftime("%H:%M:%S")
+        content: data["content"],
+        user: data["user"],
+        created_at: Time.now.strftime("%H:%M:%S")
       }
     )
   end

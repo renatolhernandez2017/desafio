@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: {in: 3..255}
 
-  validates :username, presence: true, uniqueness: true, length: {in: 5..50},
+  validates :username, presence: true, uniqueness: {case_sensitive: false}, length: {in: 5..50},
     format: {with: /\A[a-zA-Z0-9\-_]+\z/, message: "só permite letras, números, '-' e '_'"}
 
   validates :email, presence: true, uniqueness: true, format: {with: URI::MailTo::EMAIL_REGEXP}
@@ -22,8 +22,11 @@ class User < ApplicationRecord
   end
 
   def increment_failed_attempts!
-    update!(failed_attempts: failed_attempts.to_i + 1)
-    lock_account! if failed_attempts >= MAX_FAILED_ATTEMPTS
+    increment = failed_attempts.to_i + 1
+    success = update(failed_attempts: increment)
+
+    lock_account! if success && increment >= MAX_FAILED_ATTEMPTS
+    success
   end
 
   def reset_failed_attempts!
