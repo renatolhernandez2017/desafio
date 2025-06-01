@@ -1,10 +1,10 @@
-# Instruções de Utilização
+# Instruções de utilização
   - Precisa ter o VsCode Instalado
 
   - Para conseguir usar o sistema local, favor seguir os passos abaixos:
-  - Qualquer dúvida estou a disposição!
+  - Qualquer dúvida estou à disposição!
 
-# Passo á Passo
+# Passo a passo
   ### Acessar página do projeto
   - [https://github.com/renatolhernandez2017/desafio](https://github.com/renatolhernandez2017/desafio)
 
@@ -15,25 +15,25 @@
   ### Via HTTPS
   - git clone https://github.com/renatolhernandez2017/casei.git
 
-  ### Acessar terminal entrar na pasta onde esta o projeto
+  ### Acessar terminal e entrar na pasta onde está o projeto
   - cd desafio/
 
   ### Para abrir o projeto no VsCode
   - Rode o comando -> code .
 
-  No Canto direito embaixo no terminal apareceŕa o botão abaixo, Clicar nele
+  No canto direito, embaixo, no terminal, aparecerá o botão abaixo. Clique nele
   - Conectar-se ao Container de Desenvolvimento
 
-  Em seguida, esperar todo o sistema carregar se guir instrução no terminal
-  - No terminal do VsCode no canto direito embaixo, abra um novo e nesse terminal seguir os proximos passos
+  Em seguida, esperar todo o sistema carregar e seguir instrução no terminal
+  - No terminal do VsCode, no canto direito, embaixo, abra um novo terminal e, neste mesmo seguir os proximos passos
 
-  ### No novo terminal do VsCode rodar o comando para subir a maquina de desenvolvimento
+  ### No novo terminal do VsCode, rodar o comando para subir a máquina de desenvolvimento
   - bin/dev
 
 
   Em seguida, clicar no botão Abrir no Navegador Ou acessar o link diretamente no navegador [http://localhost:3000](http://localhost:3000)
 
-  - Pronto sistema no ar e funcional
+  - Pronto! Sistema no ar e funcional
 
   ### Para verificar os e-mails recebidos, foi utilizado um simulador
-  - Para acessar abra o link em uma outra aba do seu navegador [http://localhost:3000/letter_opener](http://localhost:3000/letter_opener)
+  - Para acessar, abra o link em uma outra aba do seu navegador [http://localhost:3000/letter_opener](http://localhost:3000/letter_opener)
