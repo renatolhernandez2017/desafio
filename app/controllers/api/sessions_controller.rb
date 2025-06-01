@@ -13,6 +13,7 @@ class Api::SessionsController < ApplicationController
       token = Rails.application.message_verifier(:user).generate(user.id)
       user.reset_failed_attempts!
       session[:user_id] = user.id
+      sign_in(user)
       render json: {success: true, token: token, user: user.slice(:id, :name, :username, :email)}
     else
       user&.increment_failed_attempts!

@@ -33,7 +33,7 @@ class Api::MessagesController < ApplicationController
         {
           id: message.id,
           content: message.content,
-          user: message.user.name,
+          user: current_user.name,
           created_at: message.created_at
         }
       )

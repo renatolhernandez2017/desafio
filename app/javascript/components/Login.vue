@@ -61,11 +61,12 @@
           const data = await res.json();
 
           if (data.success) {
-            const token = data.token
-            localStorage.setItem('chat_token', token)
-            localStorage.setItem('chat_user_name', data.user.name)
+            const token = data.token;
+            localStorage.setItem('chat_token', token);
+            localStorage.setItem('chat_user_name', data.user.name);
 
-            this.$emit('login-success', data.user)
+            this.$emit('login-success', data.user);
+            this.$router.push('/chat');
           } else {
             if (data.error?.includes('bloqueada')) {
               this.isAccountBlocked = true;

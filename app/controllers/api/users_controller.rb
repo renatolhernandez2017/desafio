@@ -7,6 +7,7 @@ class Api::UsersController < ApplicationController
     if user.save
       token = Rails.application.message_verifier(:user).generate(user.id)
       UserMailer.welcome(user).deliver_now
+      sign_in(user)
       render json: {success: true, token: token, user: user.slice(:id, :name, :username, :email)}, status: :created
     else
       render json: {success: false, error: user.errors.full_messages.join(", ")}, status: :unprocessable_entity

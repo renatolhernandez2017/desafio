@@ -15,7 +15,7 @@
     </div>
 
     <div class="mb-3 mt-3">
-      <input v-model="password" type="password" placeholder="Senha" class="form-control" required minlength="20" maxlength="100" />
+      <input v-model="password" type="password" placeholder="Senha" class="form-control" required minlength="1" maxlength="100" />
     </div>
 
     <div class="mb-3 mt-3">

@@ -4,7 +4,7 @@
 
     <div class="filters my-4">
       <div class="input-group">
-        <input v-model="searchQuery" class="form-control" placeholder="Buscar por mensagem ou autor" />
+        <input v-model="searchQuery" @keyup.enter="fetchMessages" class="form-control" placeholder="Buscar por mensagem ou autor" />
         <button @click="fetchMessages" class="btn btn-success">Buscar</button>
       </div>
     </div>
@@ -100,7 +100,7 @@
 <script setup>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  import cable from './cable'
+  import { createChatConsumer } from './cable'
 
   const currentUser = ref(localStorage.getItem('chat_user_name') || '')
   const messages = ref([])
@@ -141,11 +141,24 @@
   }
 
   onMounted(() => {
+    const token = localStorage.getItem('chat_token')
+    const username = localStorage.getItem('chat_user_name')
+
+    if (!token || !username) {
+      console.error('Token ou usuário ausente.')
+      return
+    }
+
+    const cable = createChatConsumer()
+
     fetchMessages()
 
     channel = cable.subscriptions.create(
       { channel: 'ChatChannel', room: 'geral' },
       {
+        connected() {
+          console.log('Conectado ao canal WebSocket')
+        },
         received(data) {
           const index = messages.value.findIndex(m => m.id === data.id)
 
@@ -162,6 +175,9 @@
           } else {
             messages.value.unshift(message)
           }
+        },
+        disconnected() {
+          console.log('Desconectado do canal')
         }
       }
     )
