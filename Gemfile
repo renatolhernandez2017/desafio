@@ -5,7 +5,6 @@ source "https://rubygems.org"
 ruby "3.3.1"
 
 gem "audited", "~> 5.0"
-gem "aws-sdk-s3", require: false
 gem "bootsnap", require: false
 gem "cssbundling-rails"
 gem "devise_invitable"
@@ -34,8 +33,6 @@ gem "stimulus-rails"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[windows jruby]
 gem "view_component"
-gem "mercadopago-sdk", "~> 2.0"
-gem "mercadopago"
 gem "uglifier", ">= 4.1.20"
 gem "rack-cors"
 
